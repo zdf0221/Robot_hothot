@@ -13,17 +13,22 @@ async def jrrp(session: CommandSession):
 
     print(session.ctx['sender'])
     uid = session.ctx['user_id']
-
+    print(type(uid))
     name = session.ctx['sender']['nickname']
     print(name)
 
     cursor.execute('select * from daily_rp where id=?', (uid, ))
     values = cursor.fetchone()
     print(type(values))
-    if values:
+    if values is not None:
+        # already tested
         result = values[1]
     else:
-        result = random.randint(0, 100)
+        if uid in [543112018, 630661187, 379084394, 86366094, 105766067]:
+            # test VIP list: self, 嘉兰，罗伊，安康，ves
+            result = 100 - random.randint(0, 5)
+        else:
+            result = random.randint(0, 100)
         cursor.execute('insert into daily_rp values (?, ?)', (uid, result))
     print(result)
     respond = "*" + name + '今天的运势指数是' + str(result) + '%\n' + ('|' * result)

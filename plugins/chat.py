@@ -575,7 +575,7 @@ async def _(session: NLPSession):
     return IntentCommand(90.0, 'eat')
 
 
-@on_natural_language()
+@on_natural_language(only_to_me=True)
 async def _(session: NLPSession):
     return IntentCommand(50.0, 'perfunctory', None, session.msg)
 
